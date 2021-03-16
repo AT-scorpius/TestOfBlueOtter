@@ -80,10 +80,10 @@
 
             var x = $('.container').html();
             var y = "";
-            for (let index = 0; index < items.length; index++) {
+            for (let index = items.length-1; index >=0 ; index--) {
                 console.log(items[index]);
                 y +=
-                    '<div class="alert alert-success alert-dismissible fade in"> <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>'
+                    '<div class="alert alert-success alert-dismissible fade in"> <a href="#" id="'+index+'" data-dismiss="alert"  class="close" aria-label="close">×</a>'
                     + items[index] + '</div>';
             }
             $('.container').html(y + x);
@@ -104,6 +104,14 @@
                     $(this).css('text-decoration-line', 'line-through');
                 else
                     $(this).css('text-decoration-line', 'none');
+            });
+            $(document).on('click', '.close', function () {
+                let items = JSON.parse(localStorage.text);
+                let thisId=$(this).attr("id");
+                items.splice(thisId,1);
+               localStorage.text = JSON.stringify(items);
+               $('.container').html("");
+                    loadSettings();
             });
         });
     </script>
